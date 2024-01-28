@@ -1,26 +1,42 @@
 import { useState } from "react";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 
 export default function SignUp() {
   const [formData, setFormData] = useState({});
+  const [error,setError]=useState(null);
+  const [loading,setLoading]=useState(false);
+  const Navigate=useNavigate();
   const handleChange = (event) => {
     setFormData({
       ...formData,
       [event.target.id]: event.target.value,
     });
   };
-  const handleSubmit=async (event)=>{
+  const handleSubmit = async (event) => {
     event.preventDefault();
-    const res=await fetch('/api/auth/signup',
-    {
-      method:'post',
-      headers:{
-        'Content-Type':'application/json',
-      },
-      body:JSON.stringify(formData),
-    });
-    const data=await res.json();
-    console.log(data);
+    try {
+      setLoading(true);
+      const res = await fetch("/api/auth/signup", {
+        method: "post",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(formData),
+      });
+      const data = await res.json();
+      console.log(data);
+      if(data.success===false){
+        setLoading(false);
+        setError(data.message);
+        return;
+      }
+      setLoading(false);
+      setError(null);
+      Navigate('/signin');
+    } catch (error) {
+      setLoading(false);
+      setError(error.message);
+    }
   };
   return (
     <div className="p-3 mt-4 max-w-md mx-auto">
@@ -30,6 +46,7 @@ export default function SignUp() {
       <form onSubmit={handleSubmit} className="flex flex-col gap-4">
         <div className="relative ">
           <input
+            autoFocus
             type="text"
             id="username"
             className="block px-2.5 pb-2.5 pt-4 w-full text-sm text-gray-900 bg-transparent rounded-lg border appearance-none  dark:border-gray-600 dark:focus:border-blue-900 focus:outline-none focus:ring-1 focus:border-blue-600 peer"
@@ -93,18 +110,19 @@ export default function SignUp() {
           </label>
         </div>
 
-        <button className=" transition-transform bg-slate-700 text-white p-3 rounded-lg uppercase hover:opacity-90 disabled:opacity-75">
-          Sign Up
+        <button disabled={loading} className=" transition-transform bg-slate-700 text-white p-3 rounded-lg uppercase hover:opacity-90 disabled:opacity-75">
+          {loading?'Loading...':'Sign Up'}
         </button>
       </form>
       <div className="flex gap-3 mt-5 ">
         <p>Have an account?</p>
-        <Link to={"/sign-in"}>
-          <span className="text-blue-400 hover:underline hover:text-violet-500 transition-colors">
+        <Link to={"/signin"}>
+          <span className="text-blue-700 hover:underline hover:text-violet-500 transition-colors">
             Sign in
           </span>
         </Link>
       </div>
+      {error&&<p className="text-red-500 mt-5">{error}</p>}
     </div>
   );
 }

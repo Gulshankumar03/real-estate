@@ -29,7 +29,7 @@ export default function Header() {
               About
             </li>
           </Link>
-          <Link to={"/sign-in"}>
+          <Link to={"/signin"}>
             <li className="sm:inline text-slate-800 font-medium hover:text-violet-500">
               Sign in
             </li>
