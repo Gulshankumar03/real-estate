@@ -1,11 +1,14 @@
 import { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
+import {useDispatch, useSelector} from 'react-redux'
+import {signInStart,signInSuccess,signInFailure} from '../redux/user/userSlice';
 
 export default function Signin() {
   const [formData, setFormData] = useState({});
-  const [error,setError]=useState(null);
-  const [loading,setLoading]=useState(false);
+  const {loading,error}=useSelector((state)=>state.user);
   const Navigate=useNavigate();
+  const dispatch=useDispatch();
+
   const handleChange = (event) => {
     setFormData({
       ...formData,
@@ -15,7 +18,7 @@ export default function Signin() {
   const handleSubmit = async (event) => {
     event.preventDefault();
     try {
-      setLoading(true);
+      dispatch(signInStart());
       const res = await fetch("/api/auth/signin", {
         method: "post",
         headers: {
@@ -26,16 +29,13 @@ export default function Signin() {
       const data = await res.json();
       console.log(data);
       if(data.success===false){
-        setLoading(false);
-        setError(data.message);
+        dispatch(signInFailure(data.message));
         return;
       }
-      setLoading(false);
-      setError(null);
+      dispatch(signInSuccess(data));
       Navigate('/');
     } catch (error) {
-      setLoading(false);
-      setError(error.message);
+      dispatch(signInFailure(error.message));
     }
   };
   return (
@@ -49,7 +49,7 @@ export default function Signin() {
             autoFocus
             type="email"
             id="email"
-            className="block px-2.5 pb-2.5 pt-4 w-full text-sm text-gray-900 bg-transparent rounded-lg border appearance-none  dark:border-gray-600 dark:focus:border-blue-900 focus:outline-none focus:ring-1 focus:border-blue-600 peer"
+            className="block px-2.5 pb-2.5 pt-4 w-full text-sm text-gray-900 bg-transparent rounded-lg border appearance-none  dark:border-gray-600 dark:focus:border-blue-900 focus:outline-none focus:ring-0  focus:border-2 focus:border-blue-600 peer"
             placeholder=" "
             required
             onChange={handleChange}
@@ -65,7 +65,7 @@ export default function Signin() {
           <input
             type="password"
             id="password"
-            className="block px-2.5 pb-2.5 pt-4 w-full text-sm text-gray-900 bg-transparent rounded-lg border appearance-none  dark:border-gray-600 dark:focus:border-blue-900 focus:outline-none focus:ring-1 focus:border-blue-600 peer"
+            className="block px-2.5 pb-2.5 pt-4 w-full text-sm text-gray-900 bg-transparent rounded-lg border appearance-none  dark:border-gray-600 dark:focus:border-blue-900 focus:outline-none focus:ring-0  focus:border-2 focus:border-blue-600 peer"
             placeholder=" "
             required
             onChange={handleChange}
@@ -78,14 +78,14 @@ export default function Signin() {
           </label>
         </div>
         
-        <button disabled={loading} className=" transition-transform bg-slate-700 text-white p-3 rounded-lg uppercase hover:opacity-90 disabled:opacity-75">
+        <button disabled={loading} className=" transition-transform bg-slate-800 text-white p-3 rounded-lg uppercase hover:opacity-90 disabled:opacity-75">
           {loading?'Loading...':'Sign In'}
         </button>
       </form>
       <div className="flex gap-3 mt-5 ">
         <p>Doesn&apos;t have an account?</p>
         <Link to={"/signup"}>
-          <span className="text-blue-700 hover:underline hover:text-violet-500 transition-colors">
+          <span className="text-blue-900 hover:underline hover:text-violet-500 transition-colors">
             Sign up
           </span>
         </Link>

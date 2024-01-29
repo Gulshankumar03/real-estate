@@ -49,7 +49,7 @@ export default function SignUp() {
             autoFocus
             type="text"
             id="username"
-            className="block px-2.5 pb-2.5 pt-4 w-full text-sm text-gray-900 bg-transparent rounded-lg border appearance-none  dark:border-gray-600 dark:focus:border-blue-900 focus:outline-none focus:ring-1 focus:border-blue-600 peer"
+            className="block px-2.5 pb-2.5 pt-4 w-full text-sm text-gray-900 bg-transparent rounded-lg border appearance-none  dark:border-gray-600 dark:focus:border-blue-900 focus:outline-none focus:ring-0  focus:border-2 focus:border-blue-600 peer "
             placeholder=" "
             required
             onChange={handleChange}
@@ -65,7 +65,7 @@ export default function SignUp() {
           <input
             type="email"
             id="email"
-            className="block px-2.5 pb-2.5 pt-4 w-full text-sm text-gray-900 bg-transparent rounded-lg border appearance-none  dark:border-gray-600 dark:focus:border-blue-900 focus:outline-none focus:ring-1 focus:border-blue-600 peer"
+            className="block px-2.5 pb-2.5 pt-4 w-full text-sm text-gray-900 bg-transparent rounded-lg border appearance-none  dark:border-gray-600 dark:focus:border-blue-900 focus:outline-none focus:ring-0  focus:border-2 focus:border-blue-600 peer"
             placeholder=" "
             required
             onChange={handleChange}
@@ -81,7 +81,7 @@ export default function SignUp() {
           <input
             type="password"
             id="password"
-            className="block px-2.5 pb-2.5 pt-4 w-full text-sm text-gray-900 bg-transparent rounded-lg border appearance-none  dark:border-gray-600 dark:focus:border-blue-900 focus:outline-none focus:ring-1 focus:border-blue-600 peer"
+            className="block px-2.5 pb-2.5 pt-4 w-full text-sm text-gray-900 bg-transparent rounded-lg border appearance-none  dark:border-gray-600 dark:focus:border-blue-900 focus:outline-none focus:ring-0  focus:border-2 focus:border-blue-600 peer"
             placeholder=" "
             required
             onChange={handleChange}
@@ -97,7 +97,7 @@ export default function SignUp() {
           <input
             type="text"
             id="confirmPassword"
-            className="block px-2.5 pb-2.5 pt-4 w-full text-sm text-gray-900 bg-transparent rounded-lg border appearance-none  dark:border-gray-600 dark:focus:border-blue-900 focus:outline-none focus:ring-1 focus:border-blue-600 peer"
+            className="block px-2.5 pb-2.5 pt-4 w-full text-sm text-gray-900 bg-transparent rounded-lg border appearance-none  dark:border-gray-600 dark:focus:border-blue-900 focus:outline-none focus:ring-0  focus:border-2 focus:border-blue-600 peer"
             placeholder=" "
             required
             onChange={handleChange}
@@ -110,7 +110,7 @@ export default function SignUp() {
           </label>
         </div>
 
-        <button disabled={loading} className=" transition-transform bg-slate-700 text-white p-3 rounded-lg uppercase hover:opacity-90 disabled:opacity-75">
+        <button disabled={loading} className=" transition-transform bg-slate-800 text-white p-3 rounded-lg uppercase hover:opacity-90 disabled:opacity-75">
           {loading?'Loading...':'Sign Up'}
         </button>
       </form>
