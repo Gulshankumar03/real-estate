@@ -1,13 +1,18 @@
 import { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
-import {useDispatch, useSelector} from 'react-redux'
-import {signInStart,signInSuccess,signInFailure} from '../redux/user/userSlice';
+import { useDispatch, useSelector } from "react-redux";
+import {
+  signInStart,
+  signInSuccess,
+  signInFailure,
+} from "../redux/user/userSlice";
+import OAuth from "../components/OAuth";
 
 export default function Signin() {
   const [formData, setFormData] = useState({});
-  const {loading,error}=useSelector((state)=>state.user);
-  const Navigate=useNavigate();
-  const dispatch=useDispatch();
+  const { loading, error } = useSelector((state) => state.user);
+  const Navigate = useNavigate();
+  const dispatch = useDispatch();
 
   const handleChange = (event) => {
     setFormData({
@@ -28,12 +33,12 @@ export default function Signin() {
       });
       const data = await res.json();
       console.log(data);
-      if(data.success===false){
+      if (data.success === false) {
         dispatch(signInFailure(data.message));
         return;
       }
       dispatch(signInSuccess(data));
-      Navigate('/');
+      Navigate("/");
     } catch (error) {
       dispatch(signInFailure(error.message));
     }
@@ -51,7 +56,6 @@ export default function Signin() {
             id="email"
             className="block px-2.5 pb-2.5 pt-4 w-full text-sm text-gray-900 bg-transparent rounded-lg border appearance-none  dark:border-gray-600 dark:focus:border-blue-900 focus:outline-none focus:ring-0  focus:border-2 focus:border-blue-600 peer"
             placeholder=" "
-            required
             onChange={handleChange}
           />
           <label
@@ -67,7 +71,6 @@ export default function Signin() {
             id="password"
             className="block px-2.5 pb-2.5 pt-4 w-full text-sm text-gray-900 bg-transparent rounded-lg border appearance-none  dark:border-gray-600 dark:focus:border-blue-900 focus:outline-none focus:ring-0  focus:border-2 focus:border-blue-600 peer"
             placeholder=" "
-            required
             onChange={handleChange}
           />
           <label
@@ -77,10 +80,14 @@ export default function Signin() {
             Password
           </label>
         </div>
-        
-        <button disabled={loading} className=" transition-transform bg-slate-800 text-white p-3 rounded-lg uppercase hover:opacity-90 disabled:opacity-75">
-          {loading?'Loading...':'Sign In'}
+
+        <button
+          disabled={loading}
+          className="bg-slate-700 text-white p-3 rounded-lg uppercase  hover:shadow-black hover:shadow hover:opacity-95 disabled:opacity-80"
+        >
+          {loading ? "Loading..." : "Sign In"}
         </button>
+        <OAuth />
       </form>
       <div className="flex gap-3 mt-5 ">
         <p>Doesn&apos;t have an account?</p>
@@ -90,7 +97,7 @@ export default function Signin() {
           </span>
         </Link>
       </div>
-      {error&&<p className="text-red-500 mt-5">{error}</p>}
+      {error && <p className="text-red-500 mt-5">{error}</p>}
     </div>
   );
 }
