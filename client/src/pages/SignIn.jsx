@@ -45,10 +45,10 @@ export default function Signin() {
   };
   return (
     <div className="p-3 mt-4 max-w-md mx-auto">
-      <h1 className="text-3xl text-center font-bold font-sans  my-8">
+      <h1 className="text-3xl text-center font-semibold font-sans  my-8">
         Sign In
       </h1>
-      <form onSubmit={handleSubmit} className="flex flex-col gap-4">
+      <form onSubmit={handleSubmit} autoComplete="off" className="flex flex-col gap-4">
         <div className="relative">
           <input
             autoFocus
@@ -90,10 +90,10 @@ export default function Signin() {
         <OAuth />
       </form>
       <div className="flex gap-3 mt-5 ">
-        <p>Doesn&apos;t have an account?</p>
+        <p>Don&apos;t have an account?</p>
         <Link to={"/signup"}>
-          <span className="text-blue-900 hover:underline hover:text-violet-500 transition-colors">
-            Sign up
+          <span className="text-blue-600 font-medium hover:underline hover:text-blue-600">
+            Create account
           </span>
         </Link>
       </div>
